@@ -1,0 +1,463 @@
+#Include 'TOTVS.CH'
+#Include 'Protheus.ch'
+#Include 'tbiconn.ch'
+
+/*/{Protheus.doc} 
+    @type		Function
+    @author		Rani
+    @since		15/07/2022
+    @param		Nenhum
+ 
+/*/
+
+//----------------------------------------------------------------------------------------
+/*
+User Function ExitButton
+
+Local oDialog, oButton 
+Local cTitle := PADC("Botão Sair",100)
+
+DEFINE MsDialog oDialog TITLE cTitle FROM 0,0 TO 220,410 PIXEL 
+
+oButton:= TButton():New(85,160,"Botão para sair",oDialog,{||,oDialog:End()},40,20,,,,.t.)
+
+oDialog:Activate()
+
+RETURN
+*/
+
+//--------------------------------------------------------------------------------------------
+
+/*
+User Function TwoPanel()
+Local oDialog, oSay, oFont, oPanelNav 
+Local cTitle := PADC("Painel",150)
+
+DEFINE MsDialog oDialog TITLE cTitle FROM 0,0 TO 270,510 PIXEL 
+
+oFont := TFont():New('Courier new',,18,.T.)
+
+@ 15,10 MSPANEL oPanelNav OF oDialog SIZE 119,80 COLOR CLR_BLUE,CLR_GRAY
+
+@ 35,40 SAY oSay PROMPT 'Painel 1' SIZE 200,20 COLORS CLR_BLACK,CLR_WHITE FONT oFont OF oPanelNav PIXEL
+
+@ 15,130 MSPANEL oPanelNav OF oDialog SIZE 119,80 COLOR CLR_BLUE,CLR_GRAY
+
+@ 35,40 SAY oSay PROMPT 'Painel 2' SIZE 200,20 COLORS CLR_BLACK,CLR_WHITE FONT oFont OF oPanelNav PIXEL
+
+
+oDialog:Activate()
+
+
+RETURN
+*/
+
+//----------------------------------------------------------------------------------
+
+/*
+User Function Folder()
+Local oDlg     
+Local oFolder
+	
+DEFINE MsDialog oDlg TITLE "Tela Customizada" FROM 0,0 TO 400,700 PIXEL // titulo da tela
+
+@ 10,15 FOLDER oFolder SIZE 400, 400 OF oDlg  PIXEL // temanho da pasta
+
+oFolder:AddItem("Pasta 01",.T.) //titulos das pastas
+oFolder:AddItem("Pasta 02",.T.) //titulos das pastas
+oFolder:AddItem("Pasta 03",.T.) //titulos das pastas
+oFolder:AddItem("Pasta 04",.T.) //titulos das pastas
+oFolder:AddItem("Pasta 05",.T.) //titulos das pastas
+
+
+@ 10,10 SAY "Texto na Pasta 01" OF oFolder:aDialogs[1] COLORS 0, 16000000 PIXEL //conteudo das pastas
+@ 10,10 SAY "Texto na Pasta 02" OF oFolder:aDialogs[2] COLORS 0, 16777215 PIXEL //conteudo das pastas
+@ 10,10 SAY "Texto na Pasta 03" OF oFolder:aDialogs[3] COLORS 0, 16777215 PIXEL //conteudo das pastas
+@ 10,10 SAY "Texto na Pasta 04" OF oFolder:aDialogs[4] COLORS 0, 16777215 PIXEL //conteudo das pastas
+@ 10,10 SAY "Texto na Pasta 05" OF oFolder:aDialogs[5] COLORS 0, 16777215 PIXEL //conteudo das pastas
+        
+oFolder:SetOption(1)
+
+oButton:= TButton():New(110,250,"Botão para sair",oDialog,{||,oDialog:End()},50,20,,,,.t.)
+ACTIVATE MsDialog oDlg CENTER 
+
+Return
+
+*/
+
+//------------------------------------------------------------------------------------
+
+/*
+User Function MultLine()
+Local oDlg
+Local oGet
+Local cText := "Linha 1" + CRLF + "Linha 2" + CRLF + "Linha 3" + CRLF + "Linha 4"+ CRLF + "Linha 5"
+
+DEFINE MsDialog oDlg TITLE "Exemplo TMultiGet" FROM 180,180 TO 550,700 PIXEL
+
+// Cria o Objeto tGet usando o comando @ .. GET MULTILINE
+@ 10,10 GET oGet VAR cText SIZE 200,60 MULTILINE OF oDlg PIXEL 
+
+ACTIVATE MsDialog oDlg CENTERED
+
+Return
+*/
+
+//-----------------------------------------------------------------------------
+/*
+User Function comboBox()
+
+Local oDialog, oSay, oFont, oButton
+Local cTitle := PADC("Combo Box",130) 
+Local aItemsList := {"ComboBox1", "ComboBox2", "ComboBox3"}
+Local nCombo01, oCBox1
+
+DEFINE MSDIALOG oDialog TITLE cTitle FROM 0,0 TO 230,480 COLOR CLR_BLUE,CLR_WHITE PIXEL
+
+@ 10,20 SAY oSay PROMPT 'Choose an option:' SIZE 40,0 COLORS CLR_BLACK FONT oFont OF oDialog CENTERED PIXEL
+
+oButton:= TButton():New(90,180,"Botão para sair",oDialog,{||,oDialog:End()},50,20,,,,.t.)
+
+oCBox1 := TComboBox():New(10,70,{|u| If(PCount()>0,nCombo01:=u,nCombo01)},aItemsList,072,012,oDialog,,,,CLR_BLACK,CLR_WHITE,.T.,oFont,"",,,,,,,nCombo01)
+
+oDialog:Activate()
+
+RETURN
+*/
+
+//----------------------------------------------------------------------------
+/*
+User Function DateCalender()
+
+Local oDialog, oSay, oFont, oButton
+Local cTitle := PADC("Tela Customizada",130) 
+Local dData := DATE()
+
+DEFINE MSDIALOG oDialog TITLE cTitle FROM 0,0 TO 230,480 COLOR CLR_BLUE,CLR_WHITE PIXEL
+
+@ 10,20 SAY oSay PROMPT 'Choose a date:' SIZE 60,0 COLORS CLR_BLACK FONT oFont OF oDialog CENTERED PIXEL
+
+@ 10,70 MsGet dData Size 50,10 Of oDialog Pixel
+
+oButton:= TButton():New(90,180,"Botão para sair",oDialog,{||,oDialog:End()},50,20,,,,.t.)
+
+oDialog:Activate()
+
+RETURN
+*/
+
+//-----------------------------------------------------------------------------------------
+/*
+User Function CheckBox()
+Local  oDlg              
+Local  oChkBox           
+local  lCheck := .F.     //É preciso iniciar com uma variável .F.(false), porque ela não entra marcada
+local  lCheck2 := .F.
+local  lCheck3 := .F.    
+local  lCheck4 := .F.
+
+DEFINE MsDialog oDlg TITLE "CheckBox" FROM 100,100 TO 450,400 PIXEL
+
+// Cria o Objeto tCheckBox usando o comando @ .. CHECKBOX
+// o @10,10 determina a posição que precisa estar.
+@10,10 CHECKBOX oChkBox VAR lCheck PROMPT  "CheckBox 1" SIZE 60,15 OF oDlg PIXEL 
+@20,10 CHECKBOX oChkBox VAR lCheck2 PROMPT "CheckBox 2" SIZE 60,15 OF oDlg PIXEL 
+@30,10 CHECKBOX oChkBox VAR lCheck3 PROMPT "CheckBox 3" SIZE 60,15 OF oDlg PIXEL 
+@40,10 CHECKBOX oChkBox VAR lCheck4 PROMPT "CheckBox 4" SIZE 60,15 OF oDlg PIXEL 
+
+ACTIVATE MsDialog oDlg CENTERED
+
+Return
+*/
+
+//---------------------------------------------------------------------------
+/*
+User Function Radio
+Local oDlg 
+Local oRadio
+Local nRadio  := 1
+
+
+DEFINE MsDialog oDlg TITLE "Exemplo de Radio" FROM 0,0 TO 300,400 PIXEL 
+
+@ 08,10 RADIO oRadio VAR nRadio ITEMS 'Item 1', 'Item 2','Item 3' OF oDlg  SIZE 110,10 PIXEL
+
+ACTIVATE MsDialog oDlg CENTER 
+
+RETURN
+*/
+//------------------------------------------------------------------------------
+/*
+User Function TWBrowseLegend()
+
+Local oOK := LoadBitmap(GetResources(),'br_verde') // cor do status verde .T.
+Local oNO := LoadBitmap(GetResources(),'br_vermelho') // cor do status vermelho .F.
+
+
+DEFINE DIALOG oDlg TITLE "Exemplo TWBrowse" FROM 180,180 TO 550,700 PIXEL	 //tamanho da tela e titulo   
+
+oBrowse := TWBrowse():New( 01 , 01, 260,184,,{'','Codigo','Fantasia','Razão Social'},{20,30,30},;                              
+oDlg,,,,,{||},,,,,,,.F.,,.T.,,.F.,,, ) 
+
+aBrowse  :={{.T.,'000001','Cliente  001','Nome  001'},;       //True or false quer dizer que o status ficará verde ou vermelhor           
+            {.F.,'000002','Cliente  002','Nome  002'},;       //os próximos a seguir, quer dizer o conteúdo                      
+            {.T.,'000003','Cliente  003','Nome  003'},;      //dentro da grade 
+            {.F.,'000004','Cliente  004','Nome  004'} } 
+
+
+oBrowse:SetArray(aBrowse)  //atualização do array  
+oBrowse:bLine := {||{If(aBrowse[oBrowse:nAt,01],oOK,oNO),aBrowse[oBrowse:nAt,02],;                      
+aBrowse[oBrowse:nAt,03],aBrowse[oBrowse:nAt,04] } }    
+
+
+// Troca a imagem no duplo click do mouse    
+oBrowse:bLDblClick := {|| aBrowse[oBrowse:nAt][1] := !aBrowse[oBrowse:nAt][1],;                               
+oBrowse:DrawSelect()}  
+
+//Botão sair
+oButton:= TButton():New(60,130,"Botão para sair",oDlg,{||,oDlg:End()},50,20,,,,.t.)
+
+ACTIVATE DIALOG oDlg CENTERED 
+Return
+*/
+
+//-------------------------------------------------------------------------------
+/*
+User Function TWBrowse()
+
+Local oOK := GetResources() 
+Local oNO := GetResources() 
+
+DEFINE DIALOG oDlg TITLE "Exemplo TWBrowse" FROM 180,180 TO 550,700 PIXEL	 //tamanho da tela e titulo   
+
+oBrowse := TWBrowse():New( 01 , 01, 260,184,,{'','Codigo','Fantasia','Razão Social'},{20,30,30},;                              
+oDlg,,,,,{||},,,,,,,.F.,,.T.,,.F.,,, ) 
+
+aBrowse  :={{.T.,'000001','Cliente  001','Nome  001'},;       
+            {.F.,'000002','Cliente  002','Nome  002'},;                          
+            {.T.,'000003','Cliente  003','Nome  003'},;     
+            {.F.,'000004','Cliente  004','Nome  004'} } 
+
+
+oBrowse:SetArray(aBrowse)  //atualização do array  
+oBrowse:bLine := {||{If(aBrowse[oBrowse:nAt,01],oOK,oNO),aBrowse[oBrowse:nAt,02],;                      
+aBrowse[oBrowse:nAt,03],aBrowse[oBrowse:nAt,04] } }    
+
+//Botão Sair
+oButton:= TButton():New(60,130,"Botão para sair",oDlg,{||,oDlg:End()},50,20,,,,.t.)
+
+ACTIVATE DIALOG oDlg CENTERED 
+Return
+*/
+
+//---------------------------------------------------------------------------------
+
+/*
+User Function TwBrowseCheckBox()
+
+Local cTitle := PADC("Tela Customizada",70)
+Local oButton
+Local oOK := LoadBitmap(GetResources(),'LBOK')
+Local oNO := LoadBitmap(GetResources(),'LBNO')
+
+DEFINE DIALOG oDlg TITLE cTitle FROM 180,180 TO 350,550 PIXEL	    
+
+//criação do browser, definição de linhas e colunas da tela
+oBrowse := TWBrowse():New( 01 , 01, 260,184,,{'Status','Codigo','Fantasia','Razão Social'},{20,35,35,35},oDlg,,,,,{||},,,,,,,.F.,,.T.,,.F.,,, )    
+aBrowse := {{.F.,'000001','CLIENTE 1','NOME 1'},;
+            {.F.,'000002','CLIENTE 2','NOME 2'},;
+            {.F.,'000003','CLIENTE 3','NOME 3'},;
+            {.F.,'000004','CLIENTE 4','NOME 4'} }    
+
+
+oBrowse:SetArray(aBrowse)    
+oBrowse:bLine := {||{If(aBrowse[oBrowse:nAt,01],oOK,oNO),aBrowse[oBrowse:nAt,02],aBrowse[oBrowse:nAt,03],aBrowse[oBrowse:nAt,04] } }  
+
+oButton:= TButton():New(60,130,"Botão para sair",oDlg,{||,oDlg:End()},50,20,,,,.t.)
+
+// Troca a o checkbox de acordo com o duplo click
+oBrowse:bLDblClick := {|| aBrowse[oBrowse:nAt][1] := !aBrowse[oBrowse:nAt][1],;                               
+oBrowse:DrawSelect()}
+
+ACTIVATE DIALOG oDlg CENTERED 
+Return
+
+*/
+
+//--------------------------------------------------------------------------
+/*
+User Function TwBrowseCheckboxAndLegend()
+
+Local cTitle := PADC("Tela Customizada",70)
+Local oButton
+Local oOK := LoadBitmap(GetResources(),'LBOK')
+Local oNO := LoadBitmap(GetResources(),'LBNO')
+Local oOKl := LoadBitmap(GetResources(),'br_verde')
+Local oNOl := LoadBitmap(GetResources(),'br_vermelho')  
+
+DEFINE DIALOG oDlg TITLE cTitle FROM 180,180 TO 350,550 PIXEL	    
+
+oBrowse := TWBrowse():New( 01 , 01, 260,184,,{'Status','Legenda','Codigo','Fantasia','Razão Social'},{20,35,35,35},oDlg,,,,,{||},,,,,,,.F.,,.T.,,.F.,,, )    
+aBrowse := {{.T.,.T.,'000001','CLIENTE 1','NOME 1'},{.T.,.T.,'000002','CLIENTE 2','NOME 2'},;                    
+{.T.,.T.,'000003','CLIENTE 3','NOME 3'},{.T.,.T.,'000004','CLIENTE 4','NOME 4'} }    
+
+
+oBrowse:SetArray(aBrowse)    
+oBrowse:bLine := {||{If(aBrowse[oBrowse:nAt,01],oOK,oNO),If(aBrowse[oBrowse:nAt,02],oOKl,oNOl),aBrowse[oBrowse:nAt,03],aBrowse[oBrowse:nAt,04],aBrowse[oBrowse:nAt,05] } }  
+
+oButton:= TButton():New(60,130,"Botão para sair",oDlg,{||,oDlg:End()},50,20,,,,.t.)
+// Troca a imagem no duplo click do mouse    
+oBrowse:bLDblClick := {|| aBrowse[oBrowse:nAt][1] := !aBrowse[oBrowse:nAt][1],aBrowse[oBrowse:nAt][2] := !aBrowse[oBrowse:nAt][2],;                               
+oBrowse:DrawSelect()}
+
+ACTIVATE DIALOG oDlg CENTERED 
+Return
+*/
+
+//------------------------------------------------------------------------------------
+/*
+
+user Function ModelOne()
+Local oDialog, oButton 
+Local oFolder1, oSay, oFont 
+
+Local cTitle := PADC("Tela Customizada",100)
+
+
+DEFINE MsDialog oDialog TITLE cTitle FROM 0,0 TO 300,500 PIXEL 
+oFont := TFont():New('Courier new',,18,.T.)
+
+@ 15, 030 FOLDER oFolder1 SIZE 150, 90 OF oDialog COLORS 0, 16000000 PIXEL
+@ 60,90 SAY oSay PROMPT 'Cadastro' SIZE 200,20 COLORS CLR_BLUE,CLR_WHITE FONT oFont OF oDialog PIXEL
+
+
+//Botão para sair"
+oButton:= TButton():New(120,180,"Botão para sair",oDialog,{||,oDialog:End()},50,20,,,,.t.)
+oDialog:Activate()
+
+RETURN
+
+*/
+//-----------------------------------------------------------------------------
+
+/*
+User Function ModelTwo()
+
+local oButton
+Local cTitle := PADC("Tela Customizada",100)
+ 
+DEFINE DIALOG oDlg TITLE cTitle FROM 0,0 TO 300,500 PIXEL
+
+// Cria os painéis
+oPanel1:= TPanel():New(10,011," Cabeçalho... ",oDlg,,,,,50,60)
+oPanel2:= TPanel():New(20,021," Detalhe... ",oDlg,,,,,50,60)
+oPanel3:= TPanel():New(30,031," Rodapé... ",oDlg,,,,,50,60)
+
+ 
+// Cria a Toolbox e adiciona os painéis
+oTb := TToolBox():New(15,35,oDlg,150,114)
+
+//oTb:bChangeGrp := {|x| Alert(Str(x))}
+oTb:AddGroup( oPanel1, 'Cabeçalho' )
+oTb:AddGroup( oPanel2, 'Detalhe' )
+oTb:AddGroup( oPanel3, 'Rodapé' )
+
+//BOTÃO SAIR
+oButton:= TButton():New(15,195,"Sair",oDlg,{||,oDlg:End()},30,15,,,,.t.)
+
+ 
+ACTIVATE DIALOG oDlg CENTERED
+Return
+*/
+
+//-------------------------------------------------------------------------
+/*
+user function modeloThree()
+ 
+  local aDados := {}
+  local oBrowse := nil
+  local oButton, oPanel, oSay
+  Local cTitle := PADC("Tela Customizada",90)
+  Local lHasButton := .T.
+  Local cGet1 := ""
+  Local cGet2 := "999.999,99"
+ 
+  DEFINE DIALOG oDlg TITLE cTitle FROM 0, 0 TO 270, 470 PIXEL           
+ 
+
+    oTFont := TFont():New('Courier new',,16,.T.)
+
+    // Cria array com dados
+    aAdd( aDados, { " ", " ", " ", " ", " " } )
+    aAdd( aDados, { " ", " ", " ", " ", " " } )
+    aAdd( aDados, { " ", " ", " ", " ", " " } )
+    aAdd( aDados, { " ", " ", " ", " ", " " } )
+
+    
+    oPanel:= tPanel():Create(oDlg,30,10," Código do Cliente:  ",oTFont,.F.,,CLR_BLACK,CLR_GRAY,220,90)   
+
+    oBrowse := TSBrowse():New(20,0,220,50,oPanel,,16,,1)
+
+    oGet1 := TGet():New( 0, 65, { | u | If( PCount() == 0, cGet1, cGet1 := u ) },oPanel,060, 010, "!@",, 0, 16777215,,.F.,,.T.,,.F.,,.F.,.F.,,.F.,.F. ,,"cGet1",,,,lHasButton )
+    oGet1:cF3:="SA1"
+    @ 75,124 SAY oSay PROMPT 'Valor Total:' SIZE 50,20 COLORS CLR_BLACK FONT oTFont OF oPanel PIXEL
+    @ 73,167 GET oGet1 VAR cGet2 SIZE 050,10 OF oPanel PIXEL
+ 
+   
+    oBrowse:setArray( aDados )
+ 
+    oBrowse:addColumn( TCColumn():new( "Código", { || aDados[oBrowse:nAt, 1] },,,, "LEFT",, .F., .F.,,,, .F. ) )
+    oBrowse:addColumn( TCColumn():new( "Produto", { || aDados[oBrowse:nAt, 2] },,,, "LEFT",, .F., .F.,,,, .F. ) )
+    oBrowse:addColumn( TCColumn():new( "Descrição", { || aDados[oBrowse:nAt, 3] },,,, "LEFT",, .F., .F.,,,, .F. ) )
+    oBrowse:addColumn( TCColumn():new( "Qtde", { || aDados[oBrowse:nAt, 4] },,,, "LEFT",, .F., .F.,,,, .F. ) )
+    oBrowse:addColumn( TCColumn():new( "Vl.Unitário", { || aDados[oBrowse:nAt, 5] },,,, "LEFT",, .F., .F.,,,, .F. ) )
+    oBrowse:Refresh()
+ 
+    // Cria Botõão sair
+    oButton:= TButton():New(10,200,"Sair",oDlg,{||,oDlg:End()},30,15,,,,.t.)
+
+ 
+  ACTIVATE DIALOG oDlg CENTERED
+ 
+return
+*/
+
+//------------------------------------------------------------------------------
+/*
+user function AxCadastro()
+ 
+  local aDados := {}
+  local oBrowse := nil
+  local oButton
+  Local cTitle := PADC("Cadastro de Clientes",100)
+  
+ 
+  DEFINE DIALOG oDlg TITLE cTitle FROM 0, 0 TO 270, 470 PIXEL           
+ 
+
+    aAdd( aDados, { "000002", "CLIENTE 1 ", "NOME 1" } )
+    aAdd( aDados, { "000003", "CLIENTE 2",  "NOME 2" } )
+    aAdd( aDados, { "000004", "CLIENTE 3",  "NOME 3" } )
+    aAdd( aDados, { "000001", "CLIENTE 4",  "NOME 4" } )
+    
+
+    oBrowse := TSBrowse():New(50,10,220,80,oDlg,,16,,1)  
+   
+    oBrowse:setArray( aDados )
+ 
+    oBrowse:addColumn( TCColumn():new( "Código", { || aDados[oBrowse:nAt, 1] },,,, "CENTER",, .F., .F.,,,, .F. ) )
+    oBrowse:addColumn( TCColumn():new( "Fantasia", { || aDados[oBrowse:nAt, 2] },,,, "CENTER",, .F., .F.,,,, .F. ) )
+    oBrowse:addColumn( TCColumn():new( "Razão Social", { || aDados[oBrowse:nAt, 3] },,,, "CENTER",, .F., .F.,,,, .F. ) )
+    
+ 
+    oButton:= TButton():New(10,10,"Incluir",oDlg,{||},40,15,,,,.t.)
+    oButton:= TButton():New(10,55,"Alterar",oDlg,{||},40,15,,,,.t.)
+    oButton:= TButton():New(10,100,"Visualizar",oDlg,{||},40,15,,,,.t.)
+    oButton:= TButton():New(10,145,"Outras ações",oDlg,{||},40,15,,,,.t.)
+    oButton:= TButton():New(10,190,"Sair",oDlg,{||,oDlg:End()},40,15,,,,.t.)
+
+ 
+  ACTIVATE DIALOG oDlg CENTERED
+ 
+return
+*/
